@@ -44,10 +44,24 @@ mv ./kubectl ./oc /usr/local/bin/
 ./openshift-install create manifests
 ./openshift-install create ignition-configs
 
-
+# Clear firewall and setup port-forwards
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -t nat -F
+iptables -t mangle -F
 iptables -F
-python -m SimpleHTTPServer 80
+iptables -X
+echo 1 > /proc/sys/net/ipv4/ip_forward
+sudo sysctl -w net.ipv4.conf.all.route_localnet=1
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+# Forward from config -> boostrap
+iptables -t nat -A PREROUTING -p tcp --dport 22623 -j DNAT --to-destination 192.168.1.111:22623
+# forward from config -> master
+iptables -t nat -A PREROUTING -p tcp --dport 6443 -j DNAT --to-destination 192.168.1.113:6443
 
+# Serve ignition files via HTTP
+python -m SimpleHTTPServer 80
 
 
 Boot VM with image obtained from here:
@@ -67,6 +81,14 @@ coreos.inst.ignition_url=http://demo.local/master.ign
 * worker node
 coreos.inst.ignition_url=http://demo.local/worker.ign
 
+# Extra notes
+ssh core@server
+
+Port 22623 -> boostrap
+Port 6443  -> master
+
+openssl s_client -connect api-int.test.demo.local:22623 -showcerts |less
+timedatectl set-timezone Africa/Johannesburg
 
 # Extra links
 openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
@@ -76,7 +98,5 @@ https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.38/openshift-insta
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
 
-
 ```
-
-
+	
