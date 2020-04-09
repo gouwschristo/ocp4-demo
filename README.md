@@ -63,6 +63,8 @@ iptables -t nat -A PREROUTING -p tcp --dport 6443 -j DNAT --to-destination 192.1
 # Serve ignition files via HTTP
 python -m SimpleHTTPServer 80
 
+# DNS requirements
+*.demo.local DNS points to config server.
 
 Boot VM with image obtained from here:
 https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/31.20200310.3.0/x86_64/fedora-coreos-31.20200310.3.0-live.x86_64.iso
