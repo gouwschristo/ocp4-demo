@@ -1,3 +1,4 @@
+```
 create install-config.yaml
 
 apiVersion: v1
@@ -60,3 +61,4 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhco
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
 https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.38/openshift-install-linux.tar.gz
 
+```
