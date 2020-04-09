@@ -28,7 +28,11 @@ sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFus6ewxa/gjUNYoW2Ow75WFE0Pffvzjr
 
 wget https://github.com/openshift/okd/releases/download/4.4.0-0.okd-2020-03-28-092308/openshift-client-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 wget https://github.com/openshift/okd/releases/download/4.4.0-0.okd-2020-03-28-092308/openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
-wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
+
+wget https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/31.20200210.3.0/x86_64/fedora-coreos-31.20200210.3.0-metal.x86_64.raw.xz
+wget https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/31.20200210.3.0/x86_64/fedora-coreos-31.20200210.3.0-metal.x86_64.raw.xz.sig
+mv fedora-coreos-31.20200210.3.0-metal.x86_64.raw.xz fcos.raw.xz
+mv fedora-coreos-31.20200210.3.0-metal.x86_64.raw.xz.sig fcos.raw.xz.sig
 
 tar xzvf openshift-client-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 tar xzvf openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
@@ -47,13 +51,13 @@ python -m SimpleHTTPServer 80
 
 
 Boot VM with image obtained from here:
-https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
+https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/31.20200310.3.0/x86_64/fedora-coreos-31.20200310.3.0-live.x86_64.iso
 
 Specify the following kernel parameters when booting up - press: e
 coreos.inst.install_dev=sda
-coreos.inst.image_url=http://demo.local/iso.raw.xz
-coreos.inst.ignition_url=http://demo.local/bootstrap.ign
-
+coreos.inst.image_url=http://demo.local/fcos.raw.xz
+coreos.inst.ignition_url=http://demo.local/master.ign
+coreos.inst.insecure
 
 
 # Extra links
@@ -61,5 +65,10 @@ openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
 https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.1.38/openshift-install-linux.tar.gz
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
+
 
 ```
+
+
