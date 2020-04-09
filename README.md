@@ -56,8 +56,16 @@ https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/31.20200310.3
 Specify the following kernel parameters when booting up - press: e
 coreos.inst.install_dev=sda
 coreos.inst.image_url=http://demo.local/fcos.raw.xz
-coreos.inst.ignition_url=http://demo.local/master.ign
 coreos.inst.insecure
+
+* boostrap node
+coreos.inst.ignition_url=http://demo.local/boostrap.ign
+
+* master node
+coreos.inst.ignition_url=http://demo.local/master.ign
+
+* worker node
+coreos.inst.ignition_url=http://demo.local/worker.ign
 
 
 # Extra links
