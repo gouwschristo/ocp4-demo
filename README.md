@@ -1,5 +1,5 @@
 ```
-create install-config.yaml
+Create file: install-config.yaml
 
 apiVersion: v1
 baseDomain: demo.local 
@@ -28,34 +28,35 @@ sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDFus6ewxa/gjUNYoW2Ow75WFE0Pffvzjr
 
 wget https://github.com/openshift/okd/releases/download/4.4.0-0.okd-2020-03-28-092308/openshift-client-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 wget https://github.com/openshift/okd/releases/download/4.4.0-0.okd-2020-03-28-092308/openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
+wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
 
 tar xzvf openshift-client-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 tar xzvf openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 
-cp ./kubectl ./oc /usr/local/bin/
-
-
-
-https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
+mv rhcos-4.1.0-x86_64-metal-bios.raw.gz iso.raw.gz
+mv ./kubectl ./oc /usr/local/bin/
 
 
 ./openshift-install create manifests
 ./openshift-install create ignition-configs
 
-wget https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
-mv rhcos-4.1.0-x86_64-metal-bios.raw.gz iso.raw.gz
 
 iptables -F
-python -m SimpleHTTPServer 
+python -m SimpleHTTPServer 80
 
 
+
+Boot VM with image obtained from here:
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
+
+Specify the following kernel parameters when booting up - press: e
 coreos.inst.install_dev=sda
 coreos.inst.image_url=http://demo.local/iso.raw.xz
 coreos.inst.ignition_url=http://demo.local/bootstrap.ign
 
 
 
-# Extra notes
+# Extra links
 openshift-install-linux-4.4.0-0.okd-2020-03-28-092308.tar.gz
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-installer.iso
 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.1/latest/rhcos-4.1.0-x86_64-metal-bios.raw.gz
